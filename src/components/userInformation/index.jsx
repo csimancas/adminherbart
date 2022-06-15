@@ -1,21 +1,13 @@
 import React from "react";
-import { Box } from "@mui/system";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import {
+  Grid,
+  Avatar,
+  Typography,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+} from "@mui/material";
 
 function stringToColor(string) {
   let hash = 0;
@@ -42,24 +34,47 @@ function stringAvatar(name) {
 
 const UserInformation = ({ name, campus }) => {
   return (
-    <Card
-      sx={{ maxWidth: 400, alignItems: "center", justifyContent: "center" }}
+    <Grid
+      container
+      xs={6}
+      md={12}
+      sx={{ aligneItems: "center", justifyContent: "center" }}
     >
-      <CardHeader
-        avatar={
-          <Avatar
-            sx={{ width: 100, height: 100, alignItems: "center" }}
-            {...stringAvatar(name)}
-          />
-        }
-        title={name}
-        subheader={campus}
-      />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary"></Typography>
-      </CardContent>
-      <CardActions disableSpacing></CardActions>
-    </Card>
+      <Card
+        sx={{
+          maxWidth: 500,
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CardHeader
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+          className="card-header"
+          avatar={
+            <Avatar
+              sx={{
+                width: 100,
+                height: 100,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              {...stringAvatar(name)}
+            />
+          }
+          title={name}
+          subheader={campus}
+        />
+        <CardContent>
+          <Typography variant="body2" color="text.secondary"></Typography>
+        </CardContent>
+        <CardActions disableSpacing></CardActions>
+      </Card>
+    </Grid>
   );
 };
 
