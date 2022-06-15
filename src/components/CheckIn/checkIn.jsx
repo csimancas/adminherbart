@@ -65,7 +65,7 @@ const CheckIn = () => {
 
   return (
     <>
-      <TopAppBar />
+      {/* <TopAppBar /> */}
       <div>
         <UserInformation name={"Jose luis"} />
         <Grid container spacing={2} style={{ justifyContent: "center" }}>

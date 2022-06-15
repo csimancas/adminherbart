@@ -62,55 +62,67 @@ const Login = () => {
     setCampus(event.target.value);
   };
 
-  const tryRegister = async () => {
-    const auth = getAuth();
-    const getUid = "";
-    if (password.length > 0 && password === confirm) {
-      createUserWithEmailAndPassword(auth, email, password).then((response) => {
-        console.log(response)
-        setUid(response.user.uid);
-      });
-      console.log("soy el UID", uid);
-      try {
-        const infoData = {
-          uid: uid,
-          name: name,
-          email: email,
-          password: password,
-          phone: phone,
-          level: level,
-          campus: campus,
-        };
-        console.log(infoData);
-        await addDoc(collection(db, "users"), { infoData });
-        dispatch(setUser(infoData));
-        navigate("/CheckPage");
-      } catch (e) {
-        console.log("Error adding document:", e);
-      }
+  const tryRegister = async (e) => {
+    e.preventDefault();
+    if (password === confirm) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((res) => {
+          const infoData = {
+            uid: uid,
+            name: name,
+            email: email,
+            password: password,
+            phone: phone,
+            level: level,
+            campus: campus,
+          };
+          addDoc(collection(db, "users"), { infoData });
+          dispatch(setUser(infoData));
+          navigate("/CheckPage");
+          console.log(res.user.uid);
+        })
+        .catch((err) => setError(err.message));
     } else {
       alert("Las contraseñas no coinciden");
     }
   };
 
-  const tryLogin = async () => {
-    try {
-      let userObj = {};
-      const querySnapshot = await getDocs(
-        collection(db, "users"),
-        where("uid", "==", user.uid)
-      );
-      querySnapshot.forEach((doc) => {
-        userObj = doc.data().infoData;
-      });
-      dispatch(setUser(userObj));
-      signInWithEmailAndPassword(auth, email, password).then((response) => {
-        console.log(response.user.uid);
+  // const tryLogin = async () => {
+  //   try {
+  //     let userObj = {};
+  //     const querySnapshot = await getDocs(
+  //       collection(db, "users"),
+  //       where("uid", "==", user.uid)
+  //     );
+  //     querySnapshot.forEach((doc) => {
+  //       userObj = doc.data().infoData;
+  //     });
+  //     dispatch(setUser(userObj));
+  //     signInWithEmailAndPassword(auth, email, password).then((response) => {
+  //       navigate("/CheckPage");
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const tryLogin = async (e) => {
+    let userObj = {};
+    const querySnapshot = getDocs(
+      collection(db, "users"),
+      where("uid", "==", user.uid)
+    );
+    console.log(querySnapshot)
+    // querySnapshot.forEach((doc) => {
+    //   userObj = doc.data().infoData;
+    // });
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        dispatch(setUser(userObj));
         navigate("/CheckPage");
-      });
-    } catch (err) {
-      console.log(err);
-    }
+      })
+      .catch((err) => alert(err.message));
   };
 
   return (
