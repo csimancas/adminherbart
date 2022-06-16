@@ -64,13 +64,10 @@ const Login = () => {
 
   const tryRegister = async () => {
     const auth = getAuth();
-    const getUid = "";
     if (password.length > 0 && password === confirm) {
       createUserWithEmailAndPassword(auth, email, password).then((response) => {
-        console.log(response)
         setUid(response.user.uid);
       });
-      console.log("soy el UID", uid);
       try {
         const infoData = {
           uid: uid,
@@ -81,7 +78,6 @@ const Login = () => {
           level: level,
           campus: campus,
         };
-        console.log(infoData);
         await addDoc(collection(db, "users"), { infoData });
         dispatch(setUser(infoData));
         navigate("/CheckPage");
