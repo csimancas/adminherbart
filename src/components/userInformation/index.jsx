@@ -36,8 +36,6 @@ const UserInformation = ({ name, campus }) => {
   return (
     <Grid
       container
-      xs={6}
-      md={12}
       sx={{ aligneItems: "center", justifyContent: "center" }}
     >
       <Card
