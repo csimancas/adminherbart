@@ -98,7 +98,7 @@ const useLogin = () => {
       let userObj = {};
       const querySnapshot = await getDocs(
         collection(db, "users"),
-        where("uid", "==", user.uid)
+        where("email", "==", email)
       );
       querySnapshot.forEach((doc) => {
         userObj = doc.data().infoData;
