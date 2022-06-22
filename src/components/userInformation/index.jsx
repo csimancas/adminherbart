@@ -1,7 +1,8 @@
 import React from "react";
 import {
-  Grid,
   Avatar,
+  Button,
+  Grid,
   Typography,
   Card,
   CardHeader,
@@ -26,13 +27,13 @@ function stringToColor(string) {
 function stringAvatar(name) {
   return {
     sx: {
-      bgcolor: stringToColor(name),
+      bgcolor: stringToColor(name === null ? 'null' : name),
     },
     children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
   };
 }
 
-const UserInformation = ({ name, campus }) => {
+const UserInformation = ({ name, campus, onCheckIn, onCheckOut }) => {
   return (
     <Grid
       container
@@ -70,7 +71,11 @@ const UserInformation = ({ name, campus }) => {
         <CardContent>
           <Typography variant="body2" color="text.secondary"></Typography>
         </CardContent>
-        <CardActions disableSpacing></CardActions>
+        <CardActions disableSpacing>
+
+          <Button variant="contained" onClick={onCheckIn}>Registrar entrada</Button>
+          <Button variant="contained" sx={{marginLeft:15}}onClick={onCheckOut}>Registrar Salida</Button>
+        </CardActions>
       </Card>
     </Grid>
   );

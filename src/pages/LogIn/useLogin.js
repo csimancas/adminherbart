@@ -89,22 +89,13 @@ const useLogin = () => {
         console.log("Error adding document:", e);
       }
     } else {
-      alert("Las contraseñas no coinciden");
+      alert("Las contraseñas deben coincidir");
     }
   };
 
   const tryLogin = async () => {
     try {
-      let userObj = {};
-      const querySnapshot = await getDocs(
-        collection(db, "users"),
-        where("email", "==", email)
-      );
-      querySnapshot.forEach((doc) => {
-        userObj = doc.data().infoData;
-      });
-      dispatch(setUser(userObj));
-      signInWithEmailAndPassword(auth, email, password).then((response) => {
+       await signInWithEmailAndPassword(auth, email, password).then((response) => {
         navigate("/CheckPage");
       });
     } catch (err) {
